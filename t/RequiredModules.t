@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------#
-# CHEF::Rest::Client Test Cases                                      #
+# Chef::Rest::Client Test Cases                                      #
 # @author : Bhavin Patel                                             #
 #--------------------------------------------------------------------#
 
@@ -22,7 +22,6 @@ subtest 'Additional required modules' => sub {
 		'Mojo::JSON',
 		'Module::Load',
 		'vars',
-		'DateTime',
 		
 	);
 
@@ -43,50 +42,50 @@ subtest 'all module check' => sub {
 		use_ok($_);
 	}
 	(
-		'CHEF',
+		'Chef',
 
-		'CHEF::Encoder',
-		'CHEF::Header',
-		'CHEF::REST',
+		'Chef::Encoder',
+		'Chef::Header',
+		'Chef::REST',
 
-		'CHEF::REST::Client',
+		'Chef::REST::Client',
 
-		'CHEF::REST::Client::search',
+		'Chef::REST::Client::search',
 		
-		'CHEF::REST::Client::recipe',
+		'Chef::REST::Client::recipe',
 
-		'CHEF::REST::Client::runlist',
+		'Chef::REST::Client::runlist',
 		
-		'CHEF::REST::Client::clients',
+		'Chef::REST::Client::clients',
 				
-		'CHEF::REST::Client::EndPoints',
+		'Chef::REST::Client::EndPoints',
 
-		'CHEF::REST::Client::sandboxes',
+		'Chef::REST::Client::sandboxes',
 		
-		'CHEF::REST::Client::principals',
+		'Chef::REST::Client::principals',
 
-		'CHEF::REST::Client::envrunlist',
+		'Chef::REST::Client::envrunlist',
 
-		'CHEF::REST::Client::role',
-		'CHEF::REST::Client::roles',
+		'Chef::REST::Client::role',
+		'Chef::REST::Client::roles',
 
-		'CHEF::REST::Client::node',
-		'CHEF::REST::Client::nodes',		
+		'Chef::REST::Client::node',
+		'Chef::REST::Client::nodes',		
 
-		'CHEF::REST::Client::data',
-		'CHEF::REST::Client::databag',
+		'Chef::REST::Client::data',
+		'Chef::REST::Client::databag',
 		
-		'CHEF::REST::Client::cookbook',
-		'CHEF::REST::Client::cookbooks',
+		'Chef::REST::Client::cookbook',
+		'Chef::REST::Client::cookbooks',
 
-		'CHEF::REST::Client::attribute',
-		'CHEF::REST::Client::attributes',
+		'Chef::REST::Client::attribute',
+		'Chef::REST::Client::attributes',
 
-		'CHEF::REST::Client::environment',
-		'CHEF::REST::Client::environments',
+		'Chef::REST::Client::environment',
+		'Chef::REST::Client::environments',
 		
-		'CHEF::REST::Client::cookbook_version',
-		'CHEF::REST::Client::cookbook_versions',
+		'Chef::REST::Client::cookbook_version',
+		'Chef::REST::Client::cookbook_versions',
 
 	);
 

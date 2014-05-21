@@ -2,19 +2,17 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile
 (
-	NAME         => 'CHEF::REST::Client',
+	NAME         => 'Chef::REST::Client',
 	AUTHOR       => 'Bhavin Patel <bpatel10@nyit.edu>',
-	VERSION_FROM => 'lib/CHEF/REST/Client.pm',
+	VERSION_FROM => 'lib/Chef/REST/Client.pm',
 	PREREQ_PM    => {
 				          'Mojo::JSON'            => 0,
 				          'File::Slurp'           => 0,
 				          'Module::Load'          => 0,
 				          'LWP::UserAgent'        => 0,
 				          'File::Basename'        => 0,
-				          'File::Spec::Functions' => 0,
-				          'parent'                => 0,
 				          'Crypt::OpenSSL::RSA'   => 0,
-				          'DateTime'              => 0,
+				          'File::Spec::Functions' => 0,
 	                },
    dist         => { 
                        COMPRESS => 'gzip -9f', 

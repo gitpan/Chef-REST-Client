@@ -14,19 +14,17 @@ license: unknown
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
-name: CHEF-REST-Client
+name: Chef-REST-Client
 no_index:
   directory:
     - t
     - inc
 requires:
   Crypt::OpenSSL::RSA: 0
-  DateTime: 0
   File::Basename: 0
   File::Slurp: 0
   File::Spec::Functions: 0
   LWP::UserAgent: 0
   Module::Load: 0
   Mojo::JSON: 0
-  parent: 0
-version: 1
+version: 1.1

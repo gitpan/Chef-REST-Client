@@ -10,25 +10,25 @@ Chef::REST::Client
 
 use Chef::REST::Client;
 
-my $obj = new Chef::REST::Client
-          ( 'chef\_client\_name' => $chef\_client\_name )
-   $obj->name( $chef\_client\_name );
-   $obj->roles('vagrant')->details;
-   $obj->roles('vagrant','environments')->details
-   $obj->roles->list;
+	my $obj = new Chef::REST::Client
+   	       ( 'chef\_client\_name' => $chef\_client\_name )
+	$obj->name( $chef\_client\_name );
+  	$obj->roles('vagrant')->details;
+  	$obj->roles('vagrant','environments')->details
+  	$obj->roles->list;
    
 
-    $obj->search( 'secrets' , {  q => 'id:centrify', rows => 1 } )->details
+  	$obj->search( 'secrets' , {  q => 'id:centrify', rows => 1 } )->details
     
 
-    $obj->environments(<env_name>,'cookbooks' , <cookbook_name>)->details;
+  	$obj->environments(<env_name>,'cookbooks' , <cookbook_name>)->details;
 
-    $obj->environments(<env_name>,'cookbooks_versions'
+  	$obj->environments(<env_name>,'cookbooks_versions'
                                  ,{ 'method' => 'post'
                                  , 'data' => { 'runlist' => [ 'ms-scribe'] }
                                    }
                       );
-    $obj->roles(<role_name>)->details->override_attributes;
+ 	$obj->roles(<role_name>)->details->override_attributes;
                     
 
 # DESCRIPTION
@@ -51,17 +51,17 @@ you can directly get details for all the roles as $obj->role( 'role1', 'role2' )
 
 this inturn will return [Chef::REST::Client::role](http://search.cpan.org/perldoc?Chef::REST::Client::role) 
 
-- /roles
+	/roles
 
-$obj->roles->list 
+	$obj->roles->list 
 
-- /roles/<role\_name>
+	/roles/<role\_name>
 
-$obj->roles(<role\_name>)->details
+	$obj->roles(<role\_name>)->details
 
-$obj->roles(<role\_name>)->details->run\_list;
+	$obj->roles(<role\_name>)->details->run\_list;
 
-$obj->roles(<role\_name>)->details->override\_attributes;
+	$obj->roles(<role\_name>)->details->override\_attributes;
 
 ## runlist ( @$recipes )
 
@@ -72,29 +72,29 @@ used by other classes
 
 returns new [Chef::REST::Client::sandboxes](http://search.cpan.org/perldoc?Chef::REST::Client::sandboxes) object. $obj->sandboxes->list;
 
-- /sandboxes
+	/sandboxes
 
-$obj->sandboxes->list 
+	$obj->sandboxes->list 
 
-- /sandboxes/<id>
+	/sandboxes/<id>
 
-$obj->sandboxes(<id>)->details
+	$obj->sandboxes(<id>)->details
 
 ## search
 
 returns new [Chef::REST::Client::search](http://search.cpan.org/perldoc?Chef::REST::Client::search) 
 
-- /search
+	/search
 
-$obj->search->listen
+	$obj->search->listen
 
-- /search/<index>
+	/search/<index>
 
-$obj->search(<index>)->details
+	$obj->search(<index>)->details
 
-- /search/ query id:centrify and get rows 1
+	/search/ query id:centrify and get rows 1
 
-$obj->search( 'secrets' , {  q => 'id:centrify', rows => 1 } )->details
+	$obj->search( 'secrets' , {  q => 'id:centrify', rows => 1 } )->details
 
 ## recipe
 
@@ -104,13 +104,13 @@ returns new [Chef::REST::Client::recipe](http://search.cpan.org/perldoc?Chef::RE
 
 returns new [Chef::REST::Client::principals](http://search.cpan.org/perldoc?Chef::REST::Client::principals) object. $obj->principals->details;
 
-- /principals
+	/principals
 
-$obj->principals->list 
+	$obj->principals->list 
 
-- /principals/<name>
+	/principals/<name>
 
-$obj->principals(<name>)->details
+	$obj->principals(<name>)->details
 
 ## node
 
@@ -122,13 +122,13 @@ used by other classes
 
 returns new [Chef::REST::Client::nodes](http://search.cpan.org/perldoc?Chef::REST::Client::nodes) object. $obj->nodes->list;
 
-- /nodes
+	/nodes
 
-$obj->nodes->listen
+	$obj->nodes->listen
 
-- /nodes/<node\_name>
+	/nodes/<node\_name>
 
-$obj->nodes(<node\_name>)->details 
+	$obj->nodes(<node\_name>)->details 
 
 ## envrunlist
 
@@ -142,25 +142,25 @@ returns new [Chef::REST::Client::environment](http://search.cpan.org/perldoc?Che
 
 returns new [Chef::REST::Client::environments](http://search.cpan.org/perldoc?Chef::REST::Client::environments) object.
 
-- /environment/<env\_name>
+	/environment/<env\_name>
 
-$obj->environments(<env\_name>)->details;
+	$obj->environments(<env\_name>)->details;
 
-- /environment/<env\_name>/cookbooks/<cookbook\_name>
+	/environment/<env\_name>/cookbooks/<cookbook\_name>
 
-$obj->environments(<env\_name>,'cookbooks' , <cookbook\_name>)->details;
+	$obj->environments(<env\_name>,'cookbooks' , <cookbook\_name>)->details;
 
-- /environment/<env\_name>/cookbooks
+	/environment/<env\_name>/cookbooks
 
-$obj->environments(<env\_name>,'cookbooks')
+	$obj->environments(<env\_name>,'cookbooks')
 
-- POST /environments/<env\_name>/cookbooks\_versions
+	POST /environments/<env\_name>/cookbooks\_versions
 
-$obj->environments(<env\_name>,'cookbooks\_versions'
-                             ,{ 'method' => 'post'
-                              , 'data' => { 'runlist' => \[ 'ms-scribe'\] }
-                              }
-                   );
+	$obj->environments(<env\_name>,'cookbooks\_versions'
+        	                     ,{ 'method' => 'post'
+                	              , 'data' => { 'runlist' => \[ 'ms-scribe'\] }
+                        	      }
+                   	);
 
 ## databag
 
@@ -170,13 +170,13 @@ returns new [Chef::REST::Client::databag](http://search.cpan.org/perldoc?Chef::R
 
 returns new [Chef::REST::Client::data](http://search.cpan.org/perldoc?Chef::REST::Client::data) object.
 
-- /data
+	/data
 
-$obj->data->list
+	$obj->data->list
 
-- /data/<var\_name>
+	/data/<var\_name>
 
-$obj->data( <var\_name> )->details
+	$obj->data( <var\_name> )->details
 
 ## cookbook
 
@@ -186,17 +186,17 @@ returns new [Chef::REST::Client::cookbook](http://search.cpan.org/perldoc?Chef::
 
 returns new [Chef::REST::Client::cookbooks](http://search.cpan.org/perldoc?Chef::REST::Client::cookbooks) object.
 
-- /cookbooks
+	/cookbooks
 
-$obj->cookbooks->list 
+	$obj->cookbooks->list 
 
-- /cookbooks/<cookbook\_name>
+	/cookbooks/<cookbook\_name>
 
-$obj->cookbooks(<cookbook\_name>)->details 
+	$obj->cookbooks(<cookbook\_name>)->details 
 
-$obj->cookbooks(<cookbook\_name> , '\_latest' )->details->recipes;
+	$obj->cookbooks(<cookbook\_name> , '\_latest' )->details->recipes;
 
-$obj->cookbooks(<cookbook\_name> , '\_latest' )->details->attributes;
+	$obj->cookbooks(<cookbook\_name> , '\_latest' )->details->attributes;
 
 ## cookbook\_version
 
@@ -212,13 +212,13 @@ collection of [Chef::REST::Client::cookbook\_version](http://search.cpan.org/per
 
 returns new [Chef::REST::Client::clients](http://search.cpan.org/perldoc?Chef::REST::Client::clients) object.
 
-- /clients
+	/clients
 
-$obj->clients->list 
+	$obj->clients->list 
 
-- /clients/<client\_name>/
+	/clients/<client\_name>/
 
-$obj->clients(<client\_name>)->details
+	$obj->clients(<client\_name>)->details
 
 
 
