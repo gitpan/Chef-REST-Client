@@ -1,10 +1,5 @@
-#--------------------------------------------------------------------#
-# @class  : Chef::Encoder                                            #
-# @author : Bhavin Patel                                             #
-#--------------------------------------------------------------------#
-
 package Chef::Encoder;
-$Chef::Encoder::VERSION = 1.0;
+$Chef::Encoder::VERSION = 1.1;
 
 =pod
 
@@ -14,7 +9,7 @@ Chef::Encoder
 
 =head1 VERSION
 
-1.0
+1.1
 
 =head1 SYNOPSIS
 
@@ -80,6 +75,7 @@ returns $data
 
 =cut
 
+
 my @base;
 BEGIN {
 use File::Basename qw { dirname };
@@ -97,9 +93,9 @@ sub new {
   bless $self, $class;
     
     $self->{'data'            } = $param->{'data'} if defined $param->{'data'};
-    $self->{'private_key_file'} = join '/' , @base , 'data', 'private_key.pem'
-    unless defined 
-    $self->{'private_key_file'};
+    $self->{'private_key_file'} = join '/' , @base , 'data', 'private_key.pem';
+    $self->{'private_key_file'} = $param->{'private_key_file'} if defined $param->{'private_key_file'};
+
     push @base , $_tmp;
      
   return $self;
@@ -156,9 +152,9 @@ returns signed data based on the private_key_file or privete_key
 
 =cut
 
-#------------------------------#
-# @class : Chef::Encoder::pki  #
-#------------------------------#
+#----------------------------#
+#  class Chef::Encoder::pki  #
+#----------------------------#
 
 sub pki {
   my $class = shift;
@@ -171,6 +167,7 @@ sub pki {
 
   my $self = {};
   bless $self, qw { Chef::Encoder::pki };
+  
   $self->{'private_key_file'} = (defined($param->{'private_key_file'}))?
                                          $param->{'private_key_file'}  :
                                          $class->private_key_file;
@@ -184,7 +181,7 @@ sub pki {
       my $param = {@_};
       my $data = $param->{'data'};
       my $private_key = $self->private_key_file;
-      return undef unless defined $data;
+
       return $self->execute("echo -n '$data'| openssl rsautl -sign -inkey $private_key| openssl enc -base64");
     }
 
@@ -251,9 +248,9 @@ returns sha1 digest in binary  encoded with base64 of the data passed.
 
 =cut
 
-#------------------------------#
-# @class : Chef::Encoder::sha1 #
-#------------------------------#
+#----------------------------#
+#  class Chef::Encoder::sha1 #
+#----------------------------#
 
 sub sha1 {
   my $class = shift;
@@ -271,7 +268,7 @@ sub sha1 {
       my $self = shift;
       my $param = {@_};
       my $data = $param->{'data'};
-      return undef unless defined $data;
+     # return undef unless defined $data;
       return $self->execute("echo -n '$data'| openssl dgst -sha1 -binary| openssl enc -base64");
     }
     
@@ -311,9 +308,9 @@ returns base64 decoded value of data
 
 =cut
 
-#---------------------------------#
-# @class : Chef::Encoder::base64  #
-#---------------------------------#
+#-------------------------------#
+#  class Chef::Encoder::base64  #
+#-------------------------------#
 
 sub base64 {
   my $class = shift;

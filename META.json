@@ -4,9 +4,9 @@
       "Bhavin Patel <bpatel10@nyit.edu>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.72, CPAN::Meta::Converter version 2.132510",
+   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921",
    "license" : [
-      "unknown"
+      "artistic_2"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
@@ -40,10 +40,16 @@
             "File::Spec::Functions" : "0",
             "LWP::UserAgent" : "0",
             "Module::Load" : "0",
-            "Mojo::JSON" : "0"
+            "Mojo::JSON" : "0",
+            "parent" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "1.1"
+   "resources" : {
+      "repository" : {
+         "url" : "https://github.com/github4bhavin/ChefRESTClient"
+      }
+   },
+   "version" : "1.2"
 }

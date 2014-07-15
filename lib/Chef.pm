@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------#
-# @Class  : Chef                                                     #
+# Class : Chef                                                       #
 # @author : Bhavin Patel                                             #
 #--------------------------------------------------------------------#
 
@@ -43,9 +43,10 @@ sub new {
     return $self->{ 'HOSTED_CHEF' };
   }
   
-  sub name {
-    my $self = shift;
-    return $self->{'name'};
+  sub private_key {
+    my ($self,$private_key) = (@_);
+           $self->{ 'CHEF_CLIENT_PRIVATE_KEY' } = $private_key if defined $private_key;
+    return $self->{ 'CHEF_CLIENT_PRIVATE_KEY' };
   }
 }#nwe
 

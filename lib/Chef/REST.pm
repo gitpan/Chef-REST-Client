@@ -1,8 +1,3 @@
-#--------------------------------------------------------------------#
-# @class  : Chef::Rest                                               #
-# @author : Bhavin Patel                                             #
-#--------------------------------------------------------------------#
-
 package Chef::REST;
 $Chef::REST::VERSION = 1.0;
 
@@ -26,7 +21,7 @@ sub new {
 
 		 	
 	$self->_UA_( new LWP::UserAgent( ) );
-	$self->_UA_->ssl_opts( 'verify_hostname' => undef );   
+	$self->_UA_->ssl_opts( 'verify_hostname' => 0 );   
    
    return $self;
 
@@ -65,6 +60,7 @@ sub get {
 		->get( 
 		     $self->get_uri( $param->{'api_end_point'} )
 	   );
+  			  
 	return $response;
 }
 
@@ -104,6 +100,7 @@ sub name
        $self->{ 'CHEF_CLIENT' } = $client_name if defined $client_name;
    return $self->{ 'CHEF_CLIENT' };
 }
+
 
 1;
 

@@ -1,8 +1,3 @@
-#--------------------------------------------------------------------#
-# @class  : Chef::Header                                             #
-# @author : Bhavin Patel                                             #
-#--------------------------------------------------------------------#
-
 package Chef::Header;
 
 =pod
@@ -116,9 +111,11 @@ return a comma seperated list of keys and values of the header
     package Chef::Header::header;
 
     use parent -norequire,qw { Chef::Header };
-
+       
     my $self = new Chef::Header::header();
 
+    $self->_chef_encoder( new Chef::Encoder( 'private_key_file'  => $class->private_key ) );
+    
     $self->Method          ($param->{'Method'         });
     $self->HashedPath      ($param->{'Path'           });
     $self->XOpsContentHash ($param->{'Content'        });
@@ -131,14 +128,21 @@ return a comma seperated list of keys and values of the header
     $self->XChefVersion    ($class->chef_version       );
     $self->XOpsSign        ($param->{'XOpsSign'       });
     $self->Accept          ($param->{'Accept'         });    
-      
+
     return $self;
   
+  	 sub _chef_encoder {
+		my $self = shift;
+		my $obj  = shift;
+		       $self->{'header_chef_encoder'} = $obj if defined $obj;
+		return $self->{'header_chef_encoder'};
+  	 }
+  	 
     sub XOpsSign
     {
       my ($self, $x_ops_sign) = (@_);
              $self->header->{'X-Ops-Sign'} = $x_ops_sign if defined $x_ops_sign;
-             $self->header->{'X-Ops-Sign'} = 'version=1.0' unless 
+             $self->header->{'X-Ops-Sign'} = 'version=1.0;' unless 
      defined $self->header->{'X-Ops-Sign'};
       return $self->header->{'X-Ops-Sign'};  
     }
@@ -179,14 +183,13 @@ return a comma seperated list of keys and values of the header
     sub HashedPath
     {  
       my ($self,$path) = (@_);
-
+			
       if (defined ($path) )
       {
          my $end_point = ($path =~ m/^\//) ? $path : "/$path";
-         my $chef_encoder = new Chef::Encoder();
+         my $chef_encoder = $self->_chef_encoder();
          $self->header->{'Hashed Path'} = $chef_encoder->sha1
                                                         ->digest( 'data' => $end_point );
-
       }
             
       return $self->header->{'Hashed Path'};
@@ -195,13 +198,10 @@ return a comma seperated list of keys and values of the header
     sub XOpsContentHash 
     {
       my ($self,$content) = (@_);
-      if( defined ($content) || 
-        !(defined($self->header->{'X-Ops-Content-hash'})) )
-      {
-         my $chef_encoder = new Chef::Encoder();
+      my $chef_encoder = $self->_chef_encoder();         
+        
          $self->header->{'X-Ops-Content-Hash'} = $chef_encoder->sha1
                                                               ->digest( 'data' => $content );
-      }
       return $self->header->{'X-Ops-Content-Hash'};
     }
     
@@ -301,9 +301,9 @@ returns chef_header in string format . directly insertable to UserAgent headers.
 
 =cut 
     
-    #-------------------------------------------#
-    # @class : Chef::Header::header::chefheader #
-    #-------------------------------------------#
+    #-----------------------------------------#
+    #  class Chef::Header::header::chefheader #
+    #-----------------------------------------#
 
     sub chef_header {
        my $class = shift;
@@ -312,7 +312,8 @@ returns chef_header in string format . directly insertable to UserAgent headers.
        
        my $self = {};
        bless $self, qw { Chef::Header::header::chefheader };
-              
+      
+       $self->_chef_encoder( $class->_chef_encoder );        
 	    $self->Method          ( $class->Method          );
        $self->HashedPath      ( $class->HashedPath      );
        $self->XOpsContentHash ( $class->XOpsContentHash );                     
@@ -320,7 +321,13 @@ returns chef_header in string format . directly insertable to UserAgent headers.
        $self->XOpsUserId      ( $class->XOpsUserId      );
        
 	    return $self;
-	    
+	  	 sub _chef_encoder {
+			my $self = shift;
+			my $obj  = shift;
+	  	          $self->{'header_chef_encoder'} = $obj if defined $obj;
+			return $self->{'header_chef_encoder'};
+  	 	}
+  	 	    
        sub Method {
          my ($self,$method) = (@_);
                 $self->{'chef_header'}->{'Method'} = $method if
@@ -379,19 +386,22 @@ returns chef_header in string format . directly insertable to UserAgent headers.
 
        sub XOpsAuthorization {
          my $self = shift;
-         my $chef_encoder = new Chef::Encoder();
+         my $chef_encoder = $self->_chef_encoder();
          my $canonical_headers = $self->to_string;
-
          my $raw_header = $chef_encoder->pki->sign( 'data' => $canonical_headers );
-                                                      
+
+				chomp($raw_header);
+								                
          my $authorization_header = {};
          my $authorization_header_count = 1;
 			
          foreach my $line (@{$self->split_60($raw_header,[])}){
+         	chomp($line);
               $authorization_header->{ "X-Ops-Authorization-$authorization_header_count"} 
                                    = $line;
               $authorization_header_count++;
          }
+         
          return $authorization_header;
        }
 
@@ -399,12 +409,14 @@ returns chef_header in string format . directly insertable to UserAgent headers.
          my ($self,$string,$result) = (@_);
 
          return $result unless defined $string;
-         
-         my $fp = join '',(split ('', $string, 61))[0..59];
-         my $sp = (split ('', $string, 61))[60];
+         $string =~ s/\n//g if defined $string;
+ 
+         my $fp = substr $string , 0 , 60;
+         my $sp = substr $string , 60;
            push @{$result} , $fp if defined $fp;
            $self->split_60( $sp,$result) if defined $sp;
-         return $result; 
+
+         return $result;
       }
       
     }#chef_header ends.  
